@@ -1,12 +1,7 @@
 #! /bin/bash
 shopt -s lastpipe
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-shared_object_dirs=$(find ${@:$#} -name "*.so*" -printf "%h\n" | sort | uniq)
 
-echo -e "${shared_object_dirs}" | while read line
-do
-	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}${line}:
-done
+LD_LIBRARY_PATH+=$(find ${@:$#} -name "*.so*" -printf "%h\n" | sort | uniq | sed ':a;N;$!ba;s/\n/:/g'):
 
 while [ $# -gt 1 ]; do
   case $1 in
