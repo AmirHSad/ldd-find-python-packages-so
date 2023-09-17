@@ -1,8 +1,6 @@
 #! /bin/bash
-shopt -s lastpipe
 
 LD_LIBRARY_PATH+=$(find ${@:$#} -name "*.so*" -printf "%h\n" | sort | uniq | sed ':a;N;$!ba;s/\n/:/g'):
-
 while [ $# -gt 1 ]; do
   case $1 in
 	-p | --permanent)
